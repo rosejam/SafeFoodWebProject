@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper file : 실행할 쿼리 문을 저장하는 파일. 테이블 하나 당 한 개씩 작성 (사용하지 않더라도 모두 완성된 상태의 쿼리여야 한다.)-->
+<!-- namespace : 작업하는 "테이블들을 구분"해주기 위한 식별자 -->
+<mapper namespace="Member">
+
+<!-- 리절트 맵 정의 : select한 후의 결과 처리를 위해 정의해 놓음 --><!-- 쿼리마다 id가 있어서 자바에서 id를 통해 쿼리를 실행하도록 함 -->
+<!--    <resultMap id="MemberResult"  type="Member">
+      	<result property="id" column="id"/>
+     	<result property="pass" column="pass"/>
+     	<result property="alergy" column="alergy"/>
+     	<result property="myfood" column="myfood"/>
+   </resultMap> -->
+
+  <!-- 파라메터 타입은 Member vo로 넣어주고 resultType필요없음 -->
+  <!-- Member vo에서 파라메터의 이름을 각각 getter로 호출하여 가져와 넣는다. (아무 이름이나 넣으면 가져올 수 없다.) -->
+<!--   <update id="update" parameterType="java.util.Map"> 
+	update member set alergy = #{alergy} where id = #{id}
+  </update>
+  <update id="update_weight" parameterType="java.util.Map"> 
+	update member set weight = #{weight} where id = #{id}
+  </update> -->
+  
+  <update id="update" parameterType="Member"> 
+	update member set weight = #{weight}, alergy = #{alergy} where id = #{id}
+  </update>
+  
+  <delete id="delete" parameterType="java.lang.String">
+	delete from member where id = #{xx}
+  </delete>
+  
+<!--   <insert id="insert" parameterType="Member">
+	insert into member(id, pass, alergy, myfood) values(#{id}, #{pass}, #{alergy}, null)
+  </insert> -->
+  
+  <insert id="insert" parameterType="Member">
+	insert into member values(#{id}, #{pass}, #{alergy}, null, 0, #{weight})
+  </insert>
+  
+  <update id="updateFood" parameterType="java.util.Map">
+	update member set myfood = #{myfood}, mycal = #{mycal} where id = #{id}
+  </update>
+  
+  <select id="check" parameterType="java.lang.String" resultType="Member"> 
+	select * from member where id = #{id}
+  </select>
+  
+  <select id="select" parameterType="java.lang.String" resultType="Member"> 
+	select * from member where id = #{id}
+  </select>
+  
+</mapper>

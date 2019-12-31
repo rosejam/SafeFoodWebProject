@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  namespace : 작업하는 테이블들을 구분해 주기 위한 식별자 대소문자 구별 !  -->
+<mapper namespace="Food">
+
+<!-- 리절트 맵 정의 type은 config 에서 설정한 alias를 사용! 내부에서 vo 객체가 생성이 되고 테이블을 정의함 -->
+   <resultMap id="FoodResult"  type="Food">
+     <result property="code" column="code"/>
+     <result property="name" column="name"/>
+     <result property="supportpereat" column="supportpereat"/>
+     <result property="calory" column="calory"/>
+     <result property="carbo" column="carbo"/>
+     <result property="protein" column="protein"/>
+     <result property="fat" column="fat"/>
+     <result property="sugar" column="sugar"/>
+     <result property="natrium" column="natrium"/>
+     <result property="chole" column="chole"/>
+     <result property="fattyacid" column="fattyacid"/>
+     <result property="transfat" column="transfat"/>
+     <result property="maker" column="maker"/>
+     <result property="material" column="material"/>
+     <result property="img" column="img"/>
+     <result property="allergy" column="allergy"/>
+     <result property="count" column="count"/>
+     <result property="search_count" column="search_count"/>
+   </resultMap>
+	<!--  반드시 수정할 부분 ! !!  -->
+	<select id="selectAll" resultMap="FoodResult">
+    	select * from food;
+    </select>
+	<select id="selectAll_page" resultMap="FoodResult">
+    	select * from food order by count desc limit #{listSize} offset #{startList};
+    </select>
+	<select id="getListCnt" resultType="java.lang.Integer">
+    	select count(*) as listCnt from food;
+    </select>
+    <select id="selectAll_keyword" resultMap="FoodResult" parameterType="java.util.HashMap">
+    	select * from food
+    	<where>  
+   	  		<if test="key != null">
+   	  			<choose>
+   	  				<when test="key == 'name'">
+   	  					name like concat('%', #{word}, '%')
+   	  				</when>
+   	  				<when test="key == 'maker'">
+   	  					maker like concat('%', #{word}, '%')
+   	  				</when>
+   	  				<when test="key == 'calorie'">
+   	  				calorie like concat(%', #{word}, '%')
+   	  				</when>
+   	  				<when test="key == 'material'">
+   	  					material like concat('%', #{word}, '%')
+   	  				</when>
+   	  			</choose>
+   	  		</if>   	  
+   	  </where>
+    </select>
+    <select id="selectOne" parameterType="java.lang.Integer" resultMap="FoodResult">
+    	select *from food where code=#{code}
+    </select>
+    <select id="countUp" parameterType="java.lang.Integer">
+    	update food set count = count + 1 where code = #{code}
+    </select>
+    <select id="searchcnt" parameterType="java.lang.Integer">
+    	update food set search_count = search_count + 1 where code = #{code}
+    </select>
+	<!-- 
+	search ! 
+	public ArrayList<Food> searchBest();
+	public ArrayList<Food> searchBestIndex();
+	public void countUp(int code);
+	public void searchcnt(ArrayList<Food> list); -->
+	
+  <!-- <select id="selectAll" resultMap="FoodrResult">resultType="Customer">
+   실제 실행 쿼리 // 리턴되어진 resultSet을 파싱하는 부분은 아님
+    select * from customer
+  </select>
+ 쿼리마다 id 가 존재하여 원하는 쿼리를 구분하여 실행 할 수 있다.
+  <select id="selectOne" parameterType="java.lang.String" resultMap="CustomerResult"> resultType="Customer">
+  쿼리문의 값은 정확해야한다 객체가 아닌경우는 상관ㄴ(객체의경우)객체를 받아 꺼내쓰는데 getter가 호출이 되어야하니 #{xxx}는 getter가 호출될 수 있는 값을 정해야한다. 
+    select * from customer where num = #{num}
+  </select>
+  <insert id="insert" parameterType="Customer">
+  	insert into customer values(#{num},#{name},#{address})
+  </insert>
+  <delete id="delete" parameterType="java.lang.String">
+  	delete from customer where num = #{num}
+  </delete>
+  <update id="update" parameterType="Customer">
+  	update customer set address = #{address} where num =#{num}
+  </update>
+  <update id="update2" parameterType="java.util.Map"> map 의 경우 Key:Value
+  	update customer set address = #{address} where num =#{num}
+  </update>
+  <select id="findAddress" parameterType="java.lang.String" resultMap="CustomerResult">
+  	select * from customer where address= #{address}
+  </select> -->
+<!-- 사용하지 않는다 하더라도 미완의 태그를 넣어놓으면 에러가 발생 ! 따라서 안쓰는건 지우고 실행 할것  -->
+
+
+
+</mapper>

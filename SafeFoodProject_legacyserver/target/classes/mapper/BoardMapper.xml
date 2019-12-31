@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper file: 실행 할 쿼리 문을 저장하는 파일. 테이블 하나당 한개씩 작성 namespace: 작업하는 테이블들을 
+	구분해주기 위한 식별자 -->
+<mapper namespace="board">
+
+	<!-- 리절트 맵 정의 : select 한 후의 결과 처리를 위해 정의 해 놓음 -->
+	<!-- <resultMap id="BoardResult" type="Board"> 타입은 vo 이야기함 만들떄는 디폴트 생성자를 통해 새로만든다 디폴트 생성자 무조건 꼭 필요
+		<result property="num" column="num" />
+		<result property="pass" column="pass" />
+		<result property="name" column="name" />
+		<result property="wdate" column="wdate" />
+		<result property="title" column="title" />
+		<result property="content" column="content"/>
+		<result property="count" column="count"/>
+	</resultMap> -->
+	<!-- resultMap 을  없애고 밑에 resultMap 이거를 resultType = vo aliase 로 하면 된다 -->
+
+	<select id="selectAll" resultType="Board">
+		select * from Board
+	</select>
+
+	<select id="selectOne" parameterType="java.lang.String"
+		resultType="Board">
+		select * from Board where num = #{num} <!-- 매번 다른 파라메터를 처리해주기 위해 # 으로 표시한다 -->
+	</select>
+
+	<insert id="insert" parameterType="Board"> <!-- 값이 여러개 와야할 경우는 vo로 파라메터를 받는다. getter 로 값을 꺼낸다 -->
+		insert into Board values(null, #{pass}, #{name}, sysdate(), #{title}, #{content}, 0)
+	</insert>
+
+	<update id="update" parameterType="Board">
+		update Board set title = #{title}, name = #{name}, content=#{content} where num = #{num}
+	</update>
+
+	<update id="update2" parameterType="java.lang.String">
+		update Board set count = count+1  where num = #{num }
+	</update>
+	
+	<delete id="delete" parameterType="Board">
+		delete from Board where num = #{num}
+	</delete>
+
+	<!-- string - java.lang.String -->
+	<select id="findTitle" parameterType="java.lang.String"
+		resultType="Board">
+		select * from Board where title like concat('%', #{title} , '%');  
+	</select>
+
+	<select id="findName" parameterType="java.lang.String"
+		resultType="Board">
+		select * from Board where name like concat('%', #{name} , '%');  
+	</select>
+	
+</mapper>
+
+
+
