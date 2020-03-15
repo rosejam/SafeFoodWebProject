@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.safe.service.MemberService;
@@ -36,7 +38,8 @@ public class SafeFoodController {
 	@Autowired
 	MemberService service2;
 
-	@GetMapping("/list.food")
+	//@GetMapping("/list.food")
+	@RequestMapping(value = { "/list.food", "/" }, method = RequestMethod.GET)
 	public String list(Model model, HttpServletRequest req, HttpSession session , @RequestParam(required = false, defaultValue = "1") int page
 			, @RequestParam(required = false, defaultValue = "1") int range) throws Exception {
 		int listCnt = service.getBoardListCnt();

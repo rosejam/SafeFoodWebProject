@@ -31,12 +31,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update QnA set question = #{question} where num = #{num}
 	</update>
 
-	
 	<delete id="deleteqna" parameterType="Integer">
 		delete from QnA where num = #{num}
 	</delete>
-
-	
 	
 </mapper>
 

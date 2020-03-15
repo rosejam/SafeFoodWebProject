@@ -1,3 +1,5 @@
+//웹소켓 주의, index.js에 IP수정해야 하고 메시지 창에 ,를 사용할 수 없다!!!!
+
 package com.safe.controller;
  
 import java.util.ArrayList;
@@ -38,7 +40,7 @@ public class WebSocketChat {
         logger.info("Open session id:"+session.getId());
         try {
             final Basic basic=session.getBasicRemote();
-            //basic.sendText("Connection Established");
+            basic.sendText("Connection Established");
         }catch (Exception e) {
             // TODO: handle exception
             System.out.println(e.getMessage());

@@ -1,6 +1,6 @@
 
-create table qna(
-	num int primary key,
+create table QnA(
+	num int primary key auto_increment,
     title varchar(30),
     writer varchar(10),
     wdate date,
@@ -8,4 +8,4 @@ create table qna(
     answer varchar(1000)
 );
 
-insert into qna values(1,'dhjd','afd', curdate(), 'dfasfda sd', 'adfssdfasd');
+insert into QnA values(1,'dhjd','afd', curdate(), 'dfasfda sd', 'adfssdfasd');

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.safe.vo.QnA;
 
+
 @Repository
 public class QnADaoImpl implements QnADao{
 	
@@ -16,38 +17,38 @@ public class QnADaoImpl implements QnADao{
 	
 	@Override
 	public List<QnA> selectAll() {
-		return session.selectList("selectqna");
+		return session.selectList("QnA.selectqna");
 	}
 
 	@Override
 	public QnA findQuestionById(int id) {
-		return session.selectOne("selectId", id);
+		return session.selectOne("QnA.selectId", id);
 	}
 
 	@Override
 	public List<QnA> findLikeTitles(String title) {
-		return session.selectList("selectTitle", title);
+		return session.selectList("QnA.selectTitle", title);
 	}
 
 	@Override
 	public boolean addQuestion(QnA c) {
-		return session.insert("insertQuestion", c) > 0;
+		return session.insert("QnA.insertQuestion", c) > 0;
 	}
 
 	@Override
 	public boolean addAnswer(QnA answer) {
-		return session.update("insertAnswer", answer) > 0;
+		return session.update("QnA.insertAnswer", answer) > 0;
 	}
 
 	@Override
 	public boolean updateQuestion(QnA c) {
-		return session.update("updateQuestion", c) > 0;
+		return session.update("QnA.updateQuestion", c) > 0;
 	}
 
 	@Override
 	public boolean deleteQuestion(String num) {
 		int s = Integer.parseInt(num);
-		return session.delete("deleteqna", s) >0;
+		return session.delete("QnA.deleteqna", s) >0;
 	}
 
 }

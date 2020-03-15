@@ -8,11 +8,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel=icon href=/favicon.ico>
-<link href=resources/css/app.42b92694.css rel=preload as=style>
-<link href=resources/js/app.8b3f3818.js rel=preload as=script>
-<link href=resources/js/chunk-vendors.6240f7ba.js rel=preload as=script>
-<link href=resources/css/app.42b92694.css rel=stylesheet>
+<link rel=icon href=resources/favicon.ico>
+
+<!-- 크로스도메인 해결 플러그인 -->
 <meta
 	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
 	name='viewport'>
@@ -20,7 +18,7 @@
 	src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript"
 	src="resources/js/jquery.ajax-cross-origin.min.js"></script>
-<!-- 크로스도메인 해결 플러그인 -->
+
 <style>
 body {
 	font-family: Arial, Helvetica, sans-serif;
@@ -125,56 +123,118 @@ body {
 </style>
 </head>
 <script type="text/javascript">
-	$(document).ready(function(){    
-	    $.ajax({
-	        crossOrigin: true,    // 크로스도메인 해결 플러그인
-	        url: 'http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=1168064000',
-	        dataType: 'xml',
-	        success: function(response){
-	            console.log(response);
-	            
-	            var city = $(response).find('category').text();
-	            $('#weathercontainer').append(city + '<br>');
-	            var i = 1;
-	            $(response).find('data').each(function(){
-	                var day = $(this).find('day').text();
-	                var dayTxt = "오늘";
-	                var hour = $(this).find('hour').text(); //시간
-	                var wfKor = $(this).find('wfKor').text(); //구름,비,날씨맑음 등등
-	                if(wfKor.indexOf("구름") != -1) { //"구름이 있으면 "
-	                	  document.getElementById("weatherimage"+i).src = "resources/images/cloudy.jpg";
-	                }else if(wfKor.indexOf("흐림") != -1) {
-	                	document.getElementById("weatherimage"+i).src = "resources/images/cloudy.jpg";
-	                }else if(wfKor.indexOf("맑음") != -1) {
-	                	document.getElementById("weatherimage"+i).src = "resources/images/sunny.jpg";
-	                }else if(wfKor.indexOf("비") != -1) {
-	                	document.getElementById("weatherimage"+i).src = "resources/images/rain.jpg";
-	                }else if(wfKor.indexOf("눈") != -1) {
-	                	document.getElementById("weatherimage"+i).src = "resources/images/snowing.jpg";
-	                }
-	                var temp = $(this).find('temp').text(); // 현재온도 
-	                var tmx = $(this).find('tmx').text(); //최고기온 
-	                var pop = $(this).find('pop').text(); // 강수확률 
-	                if(day == 1) { var dayTxt = "내일"; }
-	                if(day == 2) { var dayTxt = "모레"; }
-	                var output = dayTxt + " " + hour + "시" ;
-			        var output1 = pop + " " + "%";        
-	                var output2 =  wfKor + " " ;
-	                var output2 =  "온        도 : " + temp + "도" ;
-	                var output3 =  "최고기온 : " + tmx  + "도";
-	                
-	                $('#today' + i).append(output + '<br>');
-	                $('#rain' + i).append(output1);
-	                $('#weather' + i).append(output2 + '<br>');
-	                $('#weather' + i).append(output3 + '<br>');
-	                i = i + 1;
-	                if( i < 5) return true;
-	                else return false;
-	            })
-	        }
-	    })
-	});
+	$(document)
+			.ready(
+					function() {
+						$
+								.ajax({
+									crossOrigin : true, // 크로스도메인 해결 플러그인
+									url : 'http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=1168064000',
+									dataType : 'xml',
+									success : function(response) {
+										console.log(response);
 
+										var city = $(response).find('category')
+												.text();
+										$('#weathercontainer').append(
+												city + '<br>');
+										var i = 1;
+										$(response)
+												.find('data')
+												.each(
+														function() {
+															var day = $(this)
+																	.find('day')
+																	.text();
+															var dayTxt = "오늘";
+															var hour = $(this)
+																	.find(
+																			'hour')
+																	.text(); //시간
+															var wfKor = $(this)
+																	.find(
+																			'wfKor')
+																	.text(); //구름,비,날씨맑음 등등
+															if (wfKor
+																	.indexOf("구름") != -1) { //"구름이 있으면 "
+																document
+																		.getElementById("weatherimage"
+																				+ i).src = "resources/images/cloudy.jpg";
+															} else if (wfKor
+																	.indexOf("흐림") != -1) {
+																document
+																		.getElementById("weatherimage"
+																				+ i).src = "resources/images/cloudy.jpg";
+															} else if (wfKor
+																	.indexOf("맑음") != -1) {
+																document
+																		.getElementById("weatherimage"
+																				+ i).src = "resources/images/sunny.jpg";
+															} else if (wfKor
+																	.indexOf("비") != -1) {
+																document
+																		.getElementById("weatherimage"
+																				+ i).src = "resources/images/rain.jpg";
+															} else if (wfKor
+																	.indexOf("눈") != -1) {
+																document
+																		.getElementById("weatherimage"
+																				+ i).src = "resources/images/snowing.jpg";
+															}
+															var temp = $(this)
+																	.find(
+																			'temp')
+																	.text(); // 현재온도 
+															var tmx = $(this)
+																	.find('tmx')
+																	.text(); //최고기온 
+															var pop = $(this)
+																	.find('pop')
+																	.text(); // 강수확률 
+															if (day == 1) {
+																var dayTxt = "내일";
+															}
+															if (day == 2) {
+																var dayTxt = "모레";
+															}
+															var output = dayTxt
+																	+ " "
+																	+ hour
+																	+ "시";
+															var output1 = pop
+																	+ " " + "%";
+															var output2 = wfKor
+																	+ " ";
+															var output2 = "온        도 : "
+																	+ temp
+																	+ "도";
+															var output3 = "최고기온 : "
+																	+ tmx + "도";
+
+															$('#today' + i)
+																	.append(
+																			output
+																					+ '<br>');
+															$('#rain' + i)
+																	.append(
+																			output1);
+															$('#weather' + i)
+																	.append(
+																			output2
+																					+ '<br>');
+															$('#weather' + i)
+																	.append(
+																			output3
+																					+ '<br>');
+															i = i + 1;
+															if (i < 5)
+																return true;
+															else
+																return false;
+														})
+									}
+								})
+					});
 </script>
 
 <body>
@@ -282,7 +342,7 @@ body {
 					type="submit" value="search" id="search">
 			</form>
 		</div>
-		
+
 		<table>
 			<c:forEach items="${foodList }" var="c">
 				<tr bgcolor=pink>
@@ -306,71 +366,75 @@ body {
 				</tr>
 			</c:forEach>
 		</table>
-		
+
 		<!-- pagination{s} -->
-		
+
 		<script type="text/javascript">
+			//이전 버튼 이벤트
+			function fn_prev(page, range, rangeSize) {
+				var page = ((range - 2) * rangeSize) + 1;
+				var range = range - 1;
+				var url = "${pageContext.request.contextPath}/list.food";
+				url = url + "?page=" + page;
+				url = url + "&range=" + range;
+				location.href = url;
 
-//이전 버튼 이벤트
-function fn_prev(page, range, rangeSize) {
-		var page = ((range - 2) * rangeSize) + 1;
-		var range = range - 1;
-		var url = "${pageContext.request.contextPath}/list.food";
-		url = url + "?page=" + page;
-		url = url + "&range=" + range;
-		location.href = url;
+			}
 
-	}
+			//페이지 번호 클릭
 
-  //페이지 번호 클릭
+			function fn_pagination(page, range, rangeSize, searchType, keyword) {
+				var url = "${pageContext.request.contextPath}/list.food";
+				url = url + "?page=" + page;
+				url = url + "&range=" + range;
+				location.href = url;
+			}
 
-	function fn_pagination(page, range, rangeSize, searchType, keyword) {
-		var url = "${pageContext.request.contextPath}/list.food";
-		url = url + "?page=" + page;
-		url = url + "&range=" + range;
-		location.href = url;	
-	}
-
-	//다음 버튼 이벤트
-	function fn_next(page, range, rangeSize) {
-		var page = parseInt((range * rangeSize)) + 1;
-		var range = parseInt(range) + 1;
-		var url = "${pageContext.request.contextPath}/list.food";
-		url = url + "?page=" + page;
-		url = url + "&range=" + range;
-		location.href = url;
-	}
-
-</script>
+			//다음 버튼 이벤트
+			function fn_next(page, range, rangeSize) {
+				var page = parseInt((range * rangeSize)) + 1;
+				var range = parseInt(range) + 1;
+				var url = "${pageContext.request.contextPath}/list.food";
+				url = url + "?page=" + page;
+				url = url + "&range=" + range;
+				location.href = url;
+			}
+		</script>
 
 
 
-		
-		
-			<div id="paginationBox">
-				<center><ul class="pagination">	
+
+
+		<div id="paginationBox">
+			<center>
+				<ul class="pagination">
 					<c:if test="${pagination.prev}">
-						<button class="w3-bar-item w3-button"><a class="page-link" href="#"
-							onClick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}')" >Previous</a></button>
+						<button class="w3-bar-item w3-button">
+							<a class="page-link" href="#"
+								onClick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}')">Previous</a>
+						</button>
 					</c:if>
 					<c:forEach begin="${pagination.startPage}"
 						end="${pagination.endPage}" var="idx">
-						<button
-							class="w3-bar-item w3-button" <c:out value="${pagination.page == idx ? 'active' : ''}"/> "><a
-							class="page-link" href="#"
-							onClick="fn_pagination('${idx}', '${pagination.range}', '${pagination.rangeSize}')">
-								${idx} </a></button>
+						<button class="w3-bar-item w3-button"<c:out value="${pagination.page == idx ? 'active' : ''}"/> ">
+							<a class="page-link" href="#"
+								onClick="fn_pagination('${idx}', '${pagination.range}', '${pagination.rangeSize}')">
+								${idx} </a>
+						</button>
 					</c:forEach>
 					<c:if test="${pagination.next}">
-						<button class="w3-bar-item w3-button"><a class="page-link" href="#"
-							onClick="fn_next('${pagination.range}', '${pagination.range}', '${pagination.rangeSize}')">Next</a></button>
+						<button class="w3-bar-item w3-button">
+							<a class="page-link" href="#"
+								onClick="fn_next('${pagination.range}', '${pagination.range}', '${pagination.rangeSize}')">Next</a>
+						</button>
 					</c:if>
-				</ul></center>
-			</div>
+				</ul>
+			</center>
+		</div>
 
-			<!-- pagination{e} -->
-		
-		
+		<!-- pagination{e} -->
+
+
 		<!-- About Section -->
 		<div class="w3-container w3-padding-32" id="best">
 			<h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Best</h3>
@@ -449,7 +513,7 @@ function fn_prev(page, range, rangeSize) {
         <i class="fa fa-paper-plane"></i> SEND MESSAGE
       </button>
     </form> -->
-			<%@ include file="index.html" %>
+			<%@ include file="index.html"%>
 		</div>
 		<!-- Image of location/map -->
 		<!-- <div class="w3-container">
@@ -464,42 +528,42 @@ function fn_prev(page, range, rangeSize) {
 	<button class="open-button" onclick="openForm()">Chat</button>
 	<div class="chat-popup" id="myForm">
 
-			<div id="butt">
-				<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-			</div>
+		<div id="butt">
+			<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+		</div>
 
-			<!-- 			<label for="msg"><b>Message</b></label>
+		<!-- 			<label for="msg"><b>Message</b></label>
 			<textarea placeholder="Type message.." name="msg" required></textarea> -->
 
-			<!-- <button type="submit" class="btn">Send</button> -->
+		<!-- <button type="submit" class="btn">Send</button> -->
 
-			<div id="mainn">
-				<!-- Server responses get written here -->
-				<div id="messagess"></div>
+		<div id="mainn">
+			<!-- Server responses get written here -->
+			<div id="messagess"></div>
 
-				<div>
-					<input type="text" id="sender" value="${sessionScope.id }"
-						style="display: none;"> <input type="text"
-						id="messageinput" placeholder="메시지를 입력해주세요.."
-						onkeyup="if(event.keyCode==13) {send();}"><!-- autofocus -->
+			<div>
+				<input type="text" id="sender" value="${sessionScope.id }"
+					style="display: none;"> <input type="text"
+					id="messageinput" placeholder="메시지를 입력해주세요.."
+					onkeyup="if(event.keyCode==13) {send();}">
+				<!-- autofocus -->
 
-					<!-- <button type="button" onclick="openSocket();">Open</button> -->
-					<button type="button" onclick="send();">Send</button>
-					<!-- <button type="button" onclick="closeSocket();">Close</button> -->
-				</div>
+				<!-- <button type="button" onclick="openSocket();">Open</button> -->
+				<button type="button" onclick="send();">Send</button>
+				<!-- <button type="button" onclick="closeSocket();">Close</button> -->
 			</div>
+		</div>
 
-		
+
 	</div>
 	<script type="text/javascript">
-
 		var ws;
 		var messages = document.getElementById("messagess");
-		
+
 		function openForm() {
 			document.getElementById("myForm").style.display = "block";
 			openSocket();
-			
+
 		}
 
 		function closeForm() {
@@ -513,7 +577,7 @@ function fn_prev(page, range, rangeSize) {
 				return;
 			}
 			//웹소켓 객체 만드는 코드
-			ws = new WebSocket("ws://70.12.108.208:8080/safefood/echo.do");
+			ws = new WebSocket("ws://localhost:8080/safefood/echo.do");
 
 			ws.onopen = function(event) {
 				if (event.data === undefined)
@@ -544,7 +608,7 @@ function fn_prev(page, range, rangeSize) {
 			messages.scrollTop = messages.scrollHeight;
 		}
 	</script>
-	
+
 	<!-- Footer -->
 	<div>
 		<footer class="w3-center w3-black w3-padding-16">

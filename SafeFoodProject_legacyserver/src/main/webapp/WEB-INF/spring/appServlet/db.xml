@@ -12,15 +12,15 @@
 	</property>
 	
 	<property name="url">
-		<value>jdbc:mysql://70.12.108.208:3306/tommy?serverTimezone=UTC</value>
+		<value>jdbc:mysql://localhost:3306/safefood?serverTimezone=UTC</value>
 	</property>
 	
 	<property name="username">
-		<value>tommy</value>
+		<value>safefood</value>
 	</property>
 	
 	<property name="password">
-		<value>lion</value>
+		<value>tommylion</value>
 	</property>
 </bean>
 </beans>
